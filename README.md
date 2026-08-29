@@ -13,7 +13,7 @@ Published with GitHub Pages: <https://pandianss.github.io/iobpay/>
 
 ## Sections
 
-Hero · why IOB Pay · payment modes · how the money moves (T+1 settlement) ·
+Hero · why IOB Pay · payment modes · how the money moves (T+2 settlement) ·
 who benefits · sector use cases (education, healthcare, hotels & travel, e-commerce,
 government, trusts, associations) · standalone vs API integration · onboarding steps ·
 transaction charges by merchant category · FAQ · contact.
