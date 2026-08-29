@@ -168,6 +168,36 @@ a{color:inherit}
   padding:28px 22px;box-shadow:var(--shadow);overflow-x:auto;
 }
 .flowbox svg{display:block;margin:0 auto;min-width:640px}
+.flow-m{display:none}
+
+/* vertical flow for narrow screens */
+.flow-m{list-style:none;margin:34px 0 0;padding:0}
+.flow-m li{position:relative;padding:0 0 26px 44px}
+.flow-m li:last-child{padding-bottom:0}
+.flow-m li::before{
+  content:"";position:absolute;left:13px;top:26px;bottom:-4px;width:2px;background:var(--line);
+}
+.flow-m li:last-child::before{display:none}
+.flow-m .dot{
+  position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;
+  background:var(--blue-soft);border:1px solid var(--line);color:var(--navy-ink);
+  display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
+}
+.flow-m .fm-label{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue);display:block;margin-bottom:3px;
+}
+.flow-m b{display:block;font-size:16px;margin-bottom:4px}
+.flow-m p{font-size:14px;color:var(--muted);margin:0}
+.flow-m .fm-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.flow-m .fm-chips span{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--blue-soft);color:var(--navy-ink);border-radius:4px;padding:5px 8px;
+}
+.flow-m .fm-settle{
+  font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:600;
+  color:var(--navy-ink);display:block;margin-bottom:2px;
+}
 
 /* ---------- WHO ---------- */
 .who{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
@@ -238,6 +268,7 @@ td.num{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numer
 tr.head td{font-weight:600;background:color-mix(in srgb,var(--blue-soft) 45%,transparent);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
 .nil{color:var(--good);font-weight:600}
 .note{font-size:13px;color:var(--muted);margin-top:16px}
+.swipe-hint{display:none;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 -4px}
 
 /* ---------- FAQ ---------- */
 details{border-bottom:1px solid var(--line);padding:16px 0}
@@ -267,10 +298,42 @@ details p{margin:10px 0 0;font-size:14.5px;color:var(--muted)}
   .who,.twoup{grid-template-columns:1fr;gap:30px}
   .sectors{grid-template-columns:repeat(2,1fr)}
 }
+/* swap the horizontal flow diagram for a stacked one */
+@media (max-width:760px){
+  .flowbox{display:none}
+  .flow-m{display:block}
+}
+
 @media (max-width:560px){
-  .g4,.stats,.steps,.contact,.sectors{grid-template-columns:1fr}
+  .wrap{padding:0 20px}
+  .g4,.steps,.contact,.sectors{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
   .modegrid{grid-template-columns:repeat(2,1fr)}
   section{padding:52px 0}
+
+  /* hero fits the narrow column */
+  .hero .wrap{padding-top:28px}
+  .topbar{padding-bottom:32px}
+  .logo-hero{width:172px;height:66px}
+  .tagpill{font-size:10px;padding:6px 11px}
+  .herogrid{padding-bottom:40px;gap:28px}
+  .cta-row .btn{flex:1 1 auto;justify-content:center}
+
+  .stat{padding:16px 18px}
+  .stat b{font-size:23px}
+  .stat span{font-size:11.5px}
+
+  /* comfortable touch targets */
+  .tab{padding:13px 15px;flex:1 1 auto;text-align:center}
+  summary{padding:6px 0;font-size:15px}
+  details{padding:10px 0}
+
+  /* more of each table on screen */
+  table{min-width:440px;font-size:13.5px}
+  th,td{padding:10px 14px}
+  caption{padding:14px 16px}
+  .cell,.optcard,.sector{padding:20px}
+  .swipe-hint{display:block}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -489,6 +552,28 @@ details p{margin:10px 0 0;font-size:14.5px;color:var(--muted)}
         </g>
       </svg>
     </div>
+    <ol class="flow-m">
+      <li>
+        <span class="dot">1</span>
+        <span class="fm-label">Pay</span>
+        <b>IOB Pay checkout</b>
+        <p>The payer — student, citizen, guest, patient or customer — chooses any mode and pays. Confirmation is instant.</p>
+        <div class="fm-chips"><span>UPI</span><span>Cards</span><span>Net banking</span><span>Wallets</span></div>
+      </li>
+      <li>
+        <span class="dot">2</span>
+        <span class="fm-label">Route</span>
+        <b>Bank + L1 aggregator</b>
+        <p>Razorpay or NTT DATA (Atom) routes the transaction — encrypted and fraud monitored throughout.</p>
+      </li>
+      <li>
+        <span class="dot">3</span>
+        <span class="fm-label">Settle</span>
+        <span class="fm-settle">T + 2</span>
+        <b>Working day credit</b>
+        <p>Funds reach your settlement account, with real-time MIS available in Corporate Internet Banking.</p>
+      </li>
+    </ol>
     <p class="note">Settlement cycle: collected funds are settled to the merchant's settlement account on a <strong>T+2 working day</strong> basis, where T is the transaction day.</p>
   </div>
 </section>
@@ -676,6 +761,7 @@ details p{margin:10px 0 0;font-size:14.5px;color:var(--muted)}
     <h2>Transaction charges</h2>
     <p class="sub">Merchant-category-wise rates, valid up to 31.03.2025. Percentages apply on transaction value; rupee figures are flat per transaction. Taxes as applicable.</p>
 
+    <p class="swipe-hint">Swipe the table sideways for all columns</p>
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" aria-selected="true" data-p="gd">Government department</button>
       <button class="tab" role="tab" aria-selected="false" data-p="pe">Private education</button>
